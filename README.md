@@ -1,1 +1,1 @@
-# genomics-course
+# Respository for EvoGeno
