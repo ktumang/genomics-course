@@ -1,0 +1,12 @@
+---
+title: "index.Rmd"
+author: "Katie Tumang"
+date: "August 31, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+[Lab 1](Lab1_KatieTumang.html)
