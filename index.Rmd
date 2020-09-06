@@ -3,7 +3,7 @@ title: "index.Rmd"
 author: "Katie Tumang"
 date: "August 31, 2020"
 output: html_document
-bibliography: data/reference.bib
+bibliography: data/references.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -14,5 +14,5 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [Lab 1: Introduction to R and Reproducible Research](Lab1_KatieTumang.html)
 
-[Lab 2: git, GitHUb and Rstudio project](Lab2_KatieTumang.html)
+[Lab 2: git, GitHub and Rstudio project](Lab2_KatieTumang.html)
 
