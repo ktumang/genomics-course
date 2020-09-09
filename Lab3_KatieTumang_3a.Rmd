@@ -27,4 +27,8 @@ View(surveys)
 str(surveys)
 ```
 
+## Challenge
+### What is the class of the object surveys? Data frame
+### How many rows and how many columns are in this object? 34786 rows, 13 columns
+### How many species have been recorded during these surveys? 48 species
 

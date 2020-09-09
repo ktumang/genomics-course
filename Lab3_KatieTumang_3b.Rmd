@@ -3,28 +3,211 @@ title: "Lab3_KatieTumang_3b"
 author: "Katie Tumang"
 date: "September 7, 2020"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+library(tidyverse)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+surveys <- read_csv("data/portal_data_joined.csv")
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### Inspect the data
+```{r}
+str(surveys)
+```
+
+### Preview the data
+```{r}
+View(surveys)
+```
+
+```{r}
+select(surveys, plot_id, -species_id, weight)
+filter(surveys, year == 1995)
+```
+
+### Intermediate steps
+```{r}
+surveys2 <- filter(surveys, weight < 5)
+surveys_sml <- select(surveys2, species_id, sex, weight)
+```
+
+### Nested functions
+```{r}
+surveys_sml <- select(filter(surveys, weight < 5), species_id, sex, weight)
+```
+
+### Pipes
+```{r}
+surveys_sml <- surveys %>% 
+  filter(weight < 5) %>% 
+  select(species_id, sex, weight)
+
+surveys_sml
+```
+
+### Challenge
+```{r}
+surveys %>% 
+  filter(year < 1995) %>% 
+  select(year, sex, weight)
+```
+
+### Mutate
+```{r}
+surveys %>%
+  filter(!is.na(weight)) %>% 
+  mutate(weight_kg = weight / 1000,
+  weight_lb = weight_kg * 2.2) %>% 
+  head()
+```
+
+### Challenge 2
+```{r}
+surveys_hindfoot_cm <- surveys %>% 
+  filter(!is.na(hindfoot_length)) %>% 
+  mutate(hindfoot_cm = hindfoot_length / 10) %>% 
+  filter(hindfoot_cm < 3) %>% 
+  select(species_id, hindfoot_cm)
+surveys_hindfoot_cm
+```
+
+### Split-apply-combine data analysis
+```{r}
+surveys %>%
+  filter(!is.na(weight)) %>% 
+  group_by(sex, species_id) %>% 
+  summarize(mean_weight = mean(weight),
+            min_weight = min(weight)) %>% 
+  arrange(desc(mean_weight))
+```
+
+### Counting
+```{r}
+surveys %>%
+  count(sex, species) %>% 
+  arrange(species, desc(n))
+```
+
+### Challenge 3
+#### 1. How many animals were caught in each plot_type surveyed?
+```{r}
+surveys %>% 
+  count(plot_type)
+```
+
+#### 2. Mean, min, max hindfoot length, # of observations:
+```{r}
+surveys %>%
+  filter(!is.na(hindfoot_length)) %>% 
+  group_by(species_id) %>% 
+  summarize(
+    mean_hindfoot_length = mean(hindfoot_length),
+    max_hindfoot_length = max(hindfoot_length),
+    min_mindfoot_length = min(hindfoot_length),
+    n = n()
+  )
+```
+
+#### 3. What was the heaviest animal measured in each year?
+```{r}
+surveys %>% 
+  filter(!is.na(weight)) %>% 
+  group_by(year) %>% 
+  filter(weight == max(weight)) %>% 
+  select(year, genus, species_id, weight) %>% 
+  arrange(year)
+```
+
+### Reshaping with gather and spread
+```{r}
+surveys_gw <- surveys %>% 
+  filter(!is.na(weight)) %>%
+  group_by(plot_id, genus) %>%
+  summarize(mean_weight = mean(weight))
+str(surveys_gw)
+```
+
+```{r}
+surveys_spread <- surveys_gw %>% 
+  spread(key = genus, value = mean_weight)
+str(surveys_gw)
+```
+
+```{r}
+surveys_gw %>% 
+  spread(genus, mean_weight, fill = 0) %>% 
+  head()
+```
+
+### Gathering
+```{r}
+surveys_gather <- surveys_spread %>% 
+  gather(key = "genus", value = "mean_weight", -plot_id)
+str(surveys_gather)
+```
+
+### Challenge 4
+#### 1.
+```{r}
+surveys_genera <- surveys %>% 
+  group_by(plot_id, year) %>% 
+  summarize(n_genera = n_distinct(genus)) %>% 
+  spread(year, n_genera)
+head(surveys_genera)
+```
+
+#### 2.
+```{r}
+surveys_genera %>% 
+  gather("year","n_genera", -plot_id)
+str(surveys_genera)
+```
+
+#### 3.
+```{r}
+surveys_measure <- surveys %>% 
+  gather("measurement", "value", hindfoot_length, weight)
+str(surveys_measure)
+```
+
+#### 4.
+```{r}
+surveys_measure %>%
+  group_by(year, measurement, plot_type) %>% 
+  summarize(mean_value = mean(value, na.rm = TRUE)) %>% 
+  spread(measurement, mean_value)
+str(surveys_measure)
+```
+
+### Exporting data
+```{r}
+surveys_complete <- surveys %>%
+  filter(!is.na(weight),
+         !is.na(hindfoot_length),
+         !is.na(sex))
+```
+
+```{r}
+species_count <- surveys_complete %>%
+  count(species_id) %>% 
+  filter(n >= 50)
+```
+
+
+```{r}
+surveys_complete <- surveys_complete %>% 
+  filter(species_id %in% species_count$species_id)
+dim(surveys_complete)
+
+write_csv(surveys_complete, path = "data/surveys_complete.csv")
+```
+
