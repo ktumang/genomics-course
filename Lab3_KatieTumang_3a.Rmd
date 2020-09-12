@@ -32,3 +32,183 @@ str(surveys)
 ### How many rows and how many columns are in this object? 34786 rows, 13 columns
 ### How many species have been recorded during these surveys? 48 species
 
+## Indexing and subsetting data frames
+
+```{r}
+surveys[1:3, 1] 
+```
+
+```{r}
+head_surveys <- surveys [1:6, ]
+head_surveys
+```
+
+```{r}
+head_surveys[, -1]
+```
+
+```{r}
+tail(surveys)[,"species_id"]
+```
+
+## Challenge 2
+### 1.
+```{r}
+surveys_200 <- surveys [200, ]
+```
+
+#### 2.
+```{r}
+n_rows <- nrow(surveys)
+surveys_last <- surveys[n_rows, ]
+surveys_last
+```
+
+```{r}
+tail(surveys)
+```
+
+#### 3.
+```{r}
+surveys_middle <- surveys[n_rows/2, ]
+surveys_middle
+```
+
+#### 4.
+```{r}
+surveys_head <- surveys[-(7:n_rows),]
+surveys_head
+```
+
+```{r}
+head(surveys)
+```
+
+## Factors
+
+```{r}
+sex <- factor(c("male", "female", "female", "male"))
+levels(sex)
+nlevels(sex)
+```
+
+```{r}
+sex # current order
+```
+
+```{r}
+sex <- factor(sex, levels = c("male", "female"))
+sex # after re-ordering
+```
+
+#### Converting factors
+
+```{r}
+as.character(sex)
+```
+
+```{r}
+year_fct <- factor(c(1990, 1983, 1977, 1998, 1990))
+as.numeric(levels(year_fct))[year_fct]
+```
+
+#### Renaming factors
+
+```{r}
+## bar plot of the number of females and males captured during the experiment:
+plot(as.factor(surveys$sex))
+```
+
+```{r}
+sex <- factor(surveys$sex)
+head(sex)
+levels(sex)
+levels(sex)[1] <- "undetermined"
+levels(sex)
+head(sex)
+```
+
+### Challenge 3.
+#### 1. Rename "F" and "M" to "female" and "male" respectively
+```{r}
+levels(sex)[2:3] <- c("female","male")
+head(sex)
+```
+#### 2. Make a bar plot where "undetermined" is last
+```{r}
+sex <- factor(sex, levels = c("female","male","undetermined"))
+plot(sex)
+```
+
+### Using stringAsFactors = FALSE
+
+```{r}
+surveys <- read.csv("data/portal_data_joined.csv", stringsAsFactors = TRUE)
+str(surveys)
+surveys <- read.csv("data/portal_data_joined.csv", stringsAsFactors = FALSE)
+str(surveys)
+surveys$plot_type <- factor(surveys$plot_type)
+```
+
+### Challenge 4.
+#### 1.
+
+```{r}
+animal_data <- data.frame(
+      animal = c("dog", "cat", "sea cucumber", "sea urchin"),
+      feel = c("furry", "furry", "squishy", "spiny"),
+      weight = c(45, 8, 1.1, 0.8)
+)
+```
+
+#### 2.
+```{r}
+country_climate <- data.frame(
+       country = c("Canada", "Panama", "South Africa", "Australia"),
+       climate = c("cold", "hot", "temperate", "hot/temperate"),
+       temperature = c(10, 30, 18, 15),
+       northern_hemisphere = c(TRUE, TRUE, FALSE, FALSE),
+       has_kangaroo = c(FALSE, FALSE, FALSE, TRUE)
+       )
+```
+
+```{r}
+str(country_climate)
+```
+
+##### 2a. I expected country, climate, northern_hemisphere, and has_kangaroo to be factors, and temperature to be numeric; country, climate, temperature, and northern_hemisphere were factors, while has_kangaroo was numeric. My initial assumption was wrong, as I forgot that despite being a numeric value, temperature is a factor that can be ordered and represents more than a number. Likewise, northern_hemisphere is a factor that categorizes whether a country is in the northern hemisphere, while has_kangaroo is a yes or no question, not a factor.
+##### 2b. Adding stringsAsFactors = FALSE would have produced character vectors instead of factors.
+##### 2c. To ensure that each column has the accurate data type, one would remove the quotations from FALSE in northern_hemisphere, and replace 1 with TRUE in has_kangaroo.
+
+### Formatting Dates
+```{r}
+str(surveys)
+```
+
+```{r}
+library("lubridate")
+```
+
+```{r}
+my_date <- ymd("2020-01-01")
+str(my_date)
+```
+
+```{r}
+my_date <- ymd(paste("2020", "1", "1", sep = "-"))
+str(my_date)
+```
+
+```{r}
+paste(surveys$year, surveys$month, surveys$day, sep = "-")
+ymd(paste(surveys$year, surveys$month, surveys$day, sep = "-"))
+surveys$date <- ymd(paste(surveys$year, surveys$month, surveys$day, sep = "-"))
+str(surveys)
+summary(surveys$date)
+```
+
+```{r}
+missing_dates <- surveys[is.na(surveys$date),c("year","month","day")]
+head(missing_dates)
+```
+
