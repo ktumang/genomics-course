@@ -19,14 +19,3 @@ knitr::opts_chunk$set(echo = TRUE)
 [Lab 3a: Starting with data](Lab3_KatieTumang_3a.html)
 
 [Lab 3b: Manipulating, analyzing, and exporting data with tidyverse](Lab3_KatieTumang_3b.html)
-
-#### Labs (accessible links)
-
-[Lab 1: Introduction to R and Reproducible Research](https://github.com/ktumang/genomics-course/blob/master/Lab1__KatieTumang.html)
-
-[Lab 2: git, GitHub and Rstudio project](https://github.com/ktumang/genomics-course/blob/master/Lab2__KatieTumang.html)
-
-[Lab 3a: Starting with data](https://github.com/ktumang/genomics-course/blob/master/Lab3_KatieTumang_3a.html)
-
-[Lab 3b: Manipulating, analyzing, and exporting data with tidyverse](https://github.com/ktumang/genomics-course/blob/master/Lab3_KatieTumang_3b.html)
-
