@@ -1,0 +1,113 @@
+---
+title: "Lab4_KatieTumang"
+author: "Katie Tumang"
+date: "September 14, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+report_03_11_2020 <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-11-2020.csv")) %>%
+  rename(Country_Region = "Country/Region", Province_State = "Province/State")
+```
+
+```{r}
+str(report_03_11_2020)
+View(report_03_11_2020)
+```
+
+## Interactive data tables
+
+```{r}
+library(DT)
+datatable(report_03_11_2020)
+```
+
+### Exercises (pt. 1)
+#### 1.
+
+```{r}
+datatable(report_03_11_2020)
+```
+
+```{r}
+report_09_11_2020 <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-13-2020.csv"))
+datatable(report_09_11_2020)
+```
+
+##### Differences
+###### From March, greater reporting and disease spread has expanded the number of provinces reported on (in March, countries in alphabetic order starts at "C", whereas in September, countries in alphabetic order starts at "A".)
+###### In September, a greater number of variables are collected and reported on, such as: active cases, incidence rate, and case fatality ratio.
+
+#### 2.
+```{r}
+report_09_11_2020_Country <- report_09_11_2020 %>% 
+  group_by(Country_Region) %>% 
+  summarize(Deaths = sum(Deaths, na.rm = TRUE))
+datatable(report_09_11_2020_Country)
+                            
+```
+
+#### 3.
+```{r}
+report_09_11_2020_US <- report_09_11_2020 %>% 
+  filter(Country_Region == "US") %>% 
+  group_by(Province_State) %>% 
+  summarize(Confirmed = sum(Confirmed, na.rm = TRUE))
+datatable(report_09_11_2020_US)
+```
+
+#### 4. 
+```{r}
+report_09_11_2020_Top10 <- report_09_11_2020 %>% 
+  group_by(Country_Region) %>% 
+  summarize(Deaths = sum(Deaths, na.rm = TRUE)) %>% 
+  slice_max(Deaths, n = 10) %>% 
+  arrange(desc(Deaths))
+datatable(report_09_11_2020_Top10)
+```
+
+## Introduction to R graphics
+
+```{r}
+library(tidyverse)
+```
+
+### Plotting with ggplot2
+```{r}
+surveys_complete <- read_csv("data/surveys_complete.csv")
+ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length)) +
+  geom_point()
+```
+
+### Building plots iteratively
+
+```{r}
+ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length)) + 
+  geom_point(alpha = 0.1, aes(color = species_id))
+```
+
+#### Challenge
+
+```{r}
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) + 
+  geom_point(alpha = 0.1, aes(color = plot_type))
+```
+
+### Boxplot
+```{r}
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
+  geom_boxplot()
+```
+
+### Exercises (pt. 2)
+#### 5.
+
