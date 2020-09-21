@@ -12,9 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Labs
 
-[Lab 1: Introduction to R and Reproducible Research](Lab1_KatieTumang.html)
+[Lab 1: Introduction to R and Reproducible Research](Lab1_KatieTumang2.html)
 
-[Lab 2: git, GitHub and RStudio projects](Lab2_KatieTumang.html)
+[Lab 2: git, GitHub and RStudio projects](Lab2_KatieTumang2.html)
 
 [Lab 3a: Starting with data](Lab3_KatieTumang_3a.html)
 
