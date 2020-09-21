@@ -105,9 +105,49 @@ ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
 ### Boxplot
 ```{r}
 ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
-  geom_boxplot()
+  geom_boxplot(alpha = 0) +
+  geom_jitter(alpha = 0.3, color = "tomato")
 ```
+
+#### Challenge
+```{r}
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = hindfoot_length)) +
+  geom_point(alpha = 0) +
+  geom_jitter(alpha = 0.2, aes(color = plot_id))
+```
+
 
 ### Exercises (pt. 2)
 #### 5.
 
+```{r}
+report_03_11_2020_Top10 <- report_03_11_2020 %>% 
+  group_by(Country_Region) %>% 
+  summarize(Deaths = sum(Deaths, na.rm = TRUE)) %>% 
+  slice_max(Deaths, n = 10) %>% 
+  arrange(desc(Deaths))
+datatable(report_03_11_2020_Top10)
+```
+
+```{r}
+ggplot(data = report_03_11_2020_Top10, mapping = aes(x = Country_Region, y = Deaths)) +
+  geom_point(alpha = 0) +
+  geom_jitter(alpha = 1, aes(color = "Deaths"))
+```
+
+```{r}
+ggplot(data = report_09_11_2020_Top10, mapping = aes(x = Country_Region, y = Deaths)) +
+  geom_point(alpha = 0) +
+  geom_jitter(alpha = 1, aes(color = "Deaths"))
+```
+
+#### 6. 
+```{r}
+ggplot(data = report_03_11_2020_Top10, mapping = aes(x = Deaths, y = Country_Region)) +
+  geom_bar(stat = 'identity')
+```
+
+```{r}
+ggplot(data = report_09_11_2020_Top10, mapping = aes(x = Deaths, y = Country_Region)) +
+  geom_bar(stat = 'identity')
+```
