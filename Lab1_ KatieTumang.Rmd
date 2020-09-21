@@ -1,3 +1,14 @@
+---
+title: "Lab1_KatieTumang"
+author: "Katie Tumang"
+date: "September 7, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
 ### Ex. 1
 
 x <- 3; y <- 15
