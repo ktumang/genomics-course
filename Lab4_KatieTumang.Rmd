@@ -75,48 +75,6 @@ report_09_11_2020_Top10 <- report_09_11_2020 %>%
 datatable(report_09_11_2020_Top10)
 ```
 
-## Introduction to R graphics
-
-```{r}
-library(tidyverse)
-```
-
-### Plotting with ggplot2
-```{r}
-surveys_complete <- read_csv("data/surveys_complete.csv")
-ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length)) +
-  geom_point()
-```
-
-### Building plots iteratively
-
-```{r}
-ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length)) + 
-  geom_point(alpha = 0.1, aes(color = species_id))
-```
-
-#### Challenge
-
-```{r}
-ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) + 
-  geom_point(alpha = 0.1, aes(color = plot_type))
-```
-
-### Boxplot
-```{r}
-ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
-  geom_boxplot(alpha = 0) +
-  geom_jitter(alpha = 0.3, color = "tomato")
-```
-
-#### Challenge
-```{r}
-ggplot(data = surveys_complete, mapping = aes(x = species_id, y = hindfoot_length)) +
-  geom_point(alpha = 0) +
-  geom_jitter(alpha = 0.2, aes(color = plot_id))
-```
-
-
 ### Exercises (pt. 2)
 #### 5.
 
