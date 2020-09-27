@@ -49,3 +49,17 @@ ggplot(data = surveys_complete, mapping = aes(x = species_id, y = hindfoot_lengt
   geom_point(alpha = 0) +
   geom_jitter(alpha = 0.2, aes(color = plot_id))
 ```
+
+### Plotting time series data
+
+```{r}
+yearly_counts <- surveys_complete %>% 
+  count(year, genus)
+
+```
+
+```{r}
+ggplot(data = yearly_counts, aes(x = year, y = n)) +
+  geom_line()
+```
+
