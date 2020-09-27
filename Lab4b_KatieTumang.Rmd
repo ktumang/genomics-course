@@ -63,3 +63,30 @@ ggplot(data = yearly_counts, aes(x = year, y = n)) +
   geom_line()
 ```
 
+```{r}
+ggplot(data = yearly_counts, aes(x = year, y = n, group = genus)) +
+  geom_line()
+```
+
+```{r}
+ggplot(data = yearly_counts, aes(x = year, y = n, color = genus)) +
+  geom_line()
+```
+
+### Integrating the pipe operator with ggplot2
+
+```{r}
+yearly_counts %>% 
+  ggplot(mapping = aes(x = year, y = n, color = genus)) +
+  geom_line
+```
+
+```{r}
+yearly_counts_graph <- surveys_complete %>% 
+  count(year, genus) %>% 
+  ggplot(mapping = aes(x = year, y = n, color = genus)) +
+  geom_line()
+yearly_counts_graph
+```
+
+
