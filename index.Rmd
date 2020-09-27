@@ -20,6 +20,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [Lab 3b: Manipulating, analyzing, and exporting data with tidyverse](Lab3_KatieTumang_3b.html)
 
-[Lab 4a: Data wrangling and graphing COVID-19 reporting data](Lab4_KatieTumang.html)
+[Lab 4a: Data wrangling and graphing COVID-19 reporting data (Part 1)](Lab4_KatieTumang.html)
 
 [Lab 4b: Data visualization with ggplot2](Lab4b_KatieTumang.html)
+
+[Lab 5: Data wrangling and graphing COVID-19 reporting data (Part 2)](Lab5_KatieTumang.html)
