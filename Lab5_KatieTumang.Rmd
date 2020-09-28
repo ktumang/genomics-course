@@ -78,9 +78,14 @@ Confirmed_State_6_13_9_13_joined_long <- Confirmed_State_6_13_9_13_joined %>%
 ```
 
 ```{r, fig.width= 5, fig.height= 15}
-ggplot(Confirmed_State_6_13_9_13_joined_long, aes(x = Confirmed , y = Province_State)) +
-  geom_bar(stat = "identity")
+Confirmed_joined_long_plot <- ggplot(Confirmed_State_6_13_9_13_joined_long, aes(x = Confirmed, y = Province_State)) +
+  geom_col(aes(fill = Date, color = Date))
 ```
+
+```{r, fig.width=10, fig.height= 15}
+print(Confirmed_joined_long_plot + ggtitle("Figure 1. Confirmed COVID-19 cases in the US") + labs(y="Province/state", x = "Confirmed cases"))
+```
+
 
 ### Working with time series data
 #### Data Wrangling
@@ -126,6 +131,17 @@ time_series_deaths_long <- time_series_deaths %>%
 head(time_series_deaths_long)
 ```
 
+#### Exercise 4
+
+```{r}
+time_series_deaths_long_plot <- time_series_deaths_long %>% 
+ group_by(Country_Region) %>% 
+  summarise(Deaths = sum(Deaths)) %>%
+  ggplot(aes(x = Date, y = Deaths)) +
+  geom_line() +
+  ggtitle("Confirmed COVID-19 deaths worldwide")
+```
+
 #### Joining the time series tables
 
 ```{r}
@@ -154,9 +170,60 @@ which(is.na(time_series_long_joined$Confirmed))
 which(is.na(time_series_long_joined$Deaths))
 ```
 
+#### Exercise 5
+
+```{r}
+time_series_joined_ex5 <- time_series_long_joined %>% 
+  filter (Country_Region == "US") %>% 
+  drop_na(Deaths, Confirmed) %>% 
+  mutate(Deaths_confirmed = Deaths / Confirmed)
+str(time_series_joined_ex5)
+```
+
+#### Exercise 6
+
+```{r}
+time_series_joined_ex5 %>% 
+  group_by(Country_Region,Date) %>% 
+  filter (Country_Region == "US") %>% 
+  ggplot(aes(x = Date, y = Deaths_confirmed))+
+  geom_point() +
+  geom_line() +
+  ggtitle("US COVID-19 deaths/confirmed cases per day")
+```
+
 ```{r}
 library(lubridate)
 ```
+
+```{r}
+time_series_long_joined$Date <- mdy(time_series_long_joined$Date)
+```
+
+#### Exercise 7
+
+```{r}
+library(DT)
+```
+
+```{r, fig.height = 10, fig.width = 15}
+time_series_long_joined %>% 
+  group_by(Country_Region) %>% 
+  summarize(Deaths = sum(Deaths, na.rm = TRUE)) %>% 
+  slice_max(Deaths, n = 10) %>% 
+  arrange(desc(Deaths))
+datatable(time_series_long_joined)
+```
+
+```{r}
+time_series_long_joined %>% 
+  filter(Country_Region %in% c("US", "Brazil", "United Kingdom", "Italy", "Mexico", "France", "Spain", "India", "Iran", "Peru")) %>%
+  ggplot(aes(x = Date, y = Deaths, fill = Country_Region, color = Country_Region)) +
+  geom_point() +
+  geom_line() +
+  ggtitle("Top 10 Countries with COVID-19-related Deaths")
+```
+
 
 ```{r}
 time_series_long_joined_counts <- time_series_long_joined %>% 
@@ -211,12 +278,3 @@ time_series_long_joined_counts %>%
            geom_line() +
            ggtitle("US COVID-19 Cases")
 ```
-
-### Exercises
-
-#### 2
-
-```{r}
-
-```
-
