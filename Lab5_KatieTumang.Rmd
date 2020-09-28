@@ -14,8 +14,7 @@ library(tidyverse)
 ```
 
 ```{r}
-Confirmed_State_3_13 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-13-2020.csv")) %>%
-  rename(Country_Region = "Country/Region", Province_State = "Province/State") %>% 
+Confirmed_State_6_13 <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/06-13-2020.csv")) %>%
   filter (Country_Region == "US") %>% 
   group_by(Province_State, Country_Region) %>% 
   summarise(Confirmed = sum(Confirmed)) 
@@ -23,7 +22,7 @@ Confirmed_State_3_13 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGI
 
 
 ```{r}
-str(Confirmed_State_3_13)
+str(Confirmed_State_6_13)
 ```
 
 ```{r}
@@ -38,7 +37,7 @@ str(Confirmed_State_9_13)
 ```
 
 ```{r}
-setdiff(Confirmed_State_9_13$Province_State, Confirmed_State_3_13$Province_State)
+setdiff(Confirmed_State_9_13$Province_State, Confirmed_State_6_13$Province_State)
 ```
 
 ```{r}
@@ -47,40 +46,40 @@ Confirmed_State_9_13 <- Confirmed_State_9_13 %>%
 ```
 
 ```{r}
-Confirmed_State_3_13_9_13_joined <- full_join(Confirmed_State_3_13,
+Confirmed_State_6_13_9_13_joined <- full_join(Confirmed_State_6_13,
     Confirmed_State_9_13, by = c("Province_State"))
-head(Confirmed_State_3_13_9_13_joined)
+head(Confirmed_State_6_13_9_13_joined)
 ```
 
 
 ```{r}
-tail(Confirmed_State_3_13_9_13_joined, 5)
+tail(Confirmed_State_6_13_9_13_joined, 5)
 ```
 
 ```{r}
-Confirmed_State_3_13_9_13_joined <- full_join(Confirmed_State_3_13,
-  Confirmed_State_3_13, by = c("Province_State")) %>% 
-  rename(Confirmed_3_13_2020 = "Confirmed.x", Confirmed_9_13_2020 = "Confirmed.y") %>%
+Confirmed_State_6_13_9_13_joined <- full_join(Confirmed_State_6_13,
+  Confirmed_State_6_13, by = c("Province_State")) %>% 
+  rename(Confirmed_6_13_2020 = "Confirmed.x", Confirmed_9_13_2020 = "Confirmed.y") %>%
   select(-Country_Region.x, -Country_Region.y) %>% 
-  replace_na(list(Confirmed_3_13_2020 = 0))
-head(Confirmed_State_3_13_9_13_joined)
+  replace_na(list(Confirmed_6_13_2020 = 0))
+head(Confirmed_State_6_13_9_13_joined)
 ```
 
 ```{r}
-which(is.na(Confirmed_State_3_13_9_13_joined))
+which(is.na(Confirmed_State_6_13_9_13_joined))
 ```
 
 ### Switching between wide and long table formats
 
 ```{r}
-Confirmed_State_3_13_9_13_joined_long <- Confirmed_State_3_13_9_13_joined %>% 
+Confirmed_State_6_13_9_13_joined_long <- Confirmed_State_6_13_9_13_joined %>% 
   pivot_longer(-c(Province_State),
                names_to = "Date", values_to = "Confirmed")
 ```
 
-```{r, fig.width = 5, fig.width = 10}
-ggplot(Confirmed_State_3_13_9_13_joined_long, aes(x = Confirmed, y = Province_State)) +
-  geom_point(aes(color = Date))
+```{r, fig.width= 5, fig.height= 15}
+ggplot(Confirmed_State_6_13_9_13_joined_long, aes(x = Confirmed , y = Province_State)) +
+  geom_bar(stat = "identity")
 ```
 
 ### Working with time series data
@@ -211,5 +210,13 @@ time_series_long_joined_counts %>%
            geom_point() +
            geom_line() +
            ggtitle("US COVID-19 Cases")
+```
+
+### Exercises
+
+#### 2
+
+```{r}
+
 ```
 
