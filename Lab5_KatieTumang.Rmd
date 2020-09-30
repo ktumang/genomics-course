@@ -314,3 +314,76 @@ time_series_long_joined_counts %>%
            geom_line() +
            ggtitle("US COVID-19 Cases")
 ```
+
+## Supplemental Lab 5 information
+
+### Graphic output
+
+```{r}
+pdf("file_name.pdf", width=6, height=3)
+time_series_long_joined %>% 
+  group_by(Country_Region,Date) %>%
+  summarise_at(c("Confirmed", "Deaths"), sum) %>%
+  filter (Country_Region == "US") %>% 
+    ggplot (aes(x = Date, y = Deaths)) +
+    geom_point() +
+    geom_line() +
+    ggtitle("US COVID-19 Deaths")
+dev.off()
+```
+
+```{r}
+ppi <- 300
+png("time_series_ex5_1.png", width=6*ppi, height=6*ppi, res=ppi)
+time_series_long_joined %>% 
+  group_by(Country_Region,Date) %>% 
+  summarise_at(c("Confirmed", "Deaths"), sum) %>%
+  filter (Country_Region == "US") %>% 
+    ggplot(aes(x = Date, y = Deaths)) +
+    geom_point() +
+    geom_line() +
+    ggtitle("US COVID-19 Deaths")
+dev.off()
+```
+
+### RMarkdown loading images
+
+[US COVID-19 Deaths](time_series_ex5_1.png)
+
+### Interactive graphs
+
+```{r}
+library(plotly)
+US_deaths <- time_series_long_joined %>% 
+    group_by(Country_Region,Date) %>% 
+    summarise_at(c("Confirmed", "Deaths"), sum) %>% 
+    filter (Country_Region == "US")
+ p <- ggplot(data = US_deaths, aes(x = Date,  y = Deaths)) + 
+        geom_point() +
+        geom_line() +
+        ggtitle("US COVID-19 Deaths")
+ggplotly(p)
+```
+
+### Animated graphs with gganimate
+
+```{r}
+library(gganimate)
+library(transformr)
+theme_set(theme_minimal())
+```
+
+```{r}
+data_time <- time_series_long_joined %>% 
+    group_by(Country_Region,Date) %>% 
+    summarise_at(c("Confirmed", "Deaths"), sum) %>% 
+    filter (Country_Region %in% c("China","Korea, South","Japan","Italy","US")) 
+p <- ggplot(data_time, aes(x = Date,  y = Confirmed, color = Country_Region)) + 
+      geom_point() +
+      geom_line() +
+      ggtitle("Confirmed COVID-19 Cases") +
+      geom_point(aes(group = seq_along(Date))) +
+      transition_reveal(Date) 
+animate(p, end_pause = 15)
+```
+
