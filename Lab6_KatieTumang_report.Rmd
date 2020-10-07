@@ -18,7 +18,7 @@ library(viridis)
 library(wesanderson)
 ```
 
-```{r}
+```{r, results='hide'}
 daily_report <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/04-02-2020.csv")) %>% 
   rename(Long = "Long_") 
     
@@ -32,7 +32,7 @@ ggplot(daily_report, aes(x = Long, y = Lat, size = Confirmed/1000)) +
     coord_fixed(ratio=1.5)
 ```
 
-```{r}
+```{r, results='hide'}
 daily_report <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/04-05-2020.csv")) %>% 
   rename(Long = "Long_") %>% 
   filter(Country_Region == "US") %>% 
@@ -51,7 +51,7 @@ ggplot(daily_report, aes(x = Long, y = Lat, size = Confirmed)) +
     coord_fixed(ratio=1.5)
 ```
 
-```{r}
+```{r, results='hide'}
 daily_report_2 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
   rename(Long = "Long_") %>% 
   filter(Country_Region == "US") %>% 
@@ -87,7 +87,7 @@ ggplot(daily_report_2, aes(x = Long, y = Lat, size = Confirmed)) +
     coord_fixed(ratio=1.5)
 ```
 
-```{r}
+```{r, results='hide'}
 daily_report <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/04-02-2020.csv")) %>% 
   rename(Long = "Long_") %>% 
   filter(Country_Region == "US") %>% 
@@ -108,7 +108,7 @@ ggplot(data = us, mapping = aes(x = long, y = lat, group = group)) +
   labs(title = "COVID-19 confirmed cases in the United States")
 ```
 
-```{r, fig.width= 5, fig.height= 15}
+```{r, fig.width= 5, fig.height= 15, results='hide'}
 library(RColorBrewer)
 report_09_26_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
   rename(Long = "Long_") %>% 
@@ -118,13 +118,13 @@ report_09_26_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISan
   mutate(Key = tolower(Key))
 ```
 
-```{r}
+```{r, results='hide'}
 us <- map_data("state")
 counties <- map_data("county") %>% 
   unite(Key, subregion, region, sep = ".", remove = FALSE)
 ```
 
-```{r}
+```{r, results='hide'}
 state_join <- left_join(counties, report_09_26_2020, by = c("Key"))
 ```
 
@@ -140,7 +140,7 @@ ggplot(data = us, mapping = aes(x = long, y = lat, group = group)) +
   theme_grey() 
 ```
 
-```{r}
+```{r, results='hide'}
 daily_report <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/04-02-2020.csv")) %>% 
   rename(Long = "Long_") %>% 
   filter(Province_State == "Massachusetts") %>% 
@@ -163,11 +163,11 @@ ggplot(data = ma_county, mapping = aes(x = long, y = lat, group = group)) +
   labs(title = "COVID-19 confirmed cases in Massachusetts")
 ```
 
-```{r}
+```{r, results='hide'}
 daily_report
 ```
 
-```{r}
+```{r, results='hide'}
 library(plotly)
 ggplotly(
   ggplot(data = ma_county, mapping = aes(x = long, y = lat, group = group)) + 
@@ -184,7 +184,7 @@ ggplotly(
 )
 ```
 
-```{r}
+```{r, results='hide'}
 daily_report <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/04-02-2020.csv")) %>% 
   rename(Long = "Long_") %>% 
   filter(Province_State == "Connecticut") %>% 
@@ -215,7 +215,7 @@ ggplotly(
 ```
 
 
-```{r}
+```{r, results='hide'}
 daily_report <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-26-2020.csv")) %>% 
   rename(Long = "Long_") %>% 
   group_by(Country_Region) %>% 
@@ -226,16 +226,16 @@ world <- as_tibble(map_data("world"))
 setdiff(world$region, daily_report$Country_Region) 
 ```
 
-```{r}
+```{r, results='hide'}
 world <- as_tibble(map_data("world")) %>% 
  mutate(region = str_replace_all(region, c("USA" = "US", "Czech Republic" = "Czechia",  "Ivory Coast" = "Cote d'Ivoire", "Democratic Republic of the Congo" = "Congo (Kinshasa)", "Republic of Congo" = "Congo (Brazzaville)")))
 ```
 
-```{r}
+```{r, results='hide'}
 country_join <- left_join(world, daily_report, by = c("region" = "Country_Region"))
 ```
 
-```{r}
+```{r, results='hide'}
 ggplotly(
 ggplot(data = world, mapping = aes(x = long, y = lat, text = region, group = group)) + 
   coord_fixed(1.3) + 
