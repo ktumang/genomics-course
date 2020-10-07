@@ -245,6 +245,6 @@ ggplot(data = world, mapping = aes(x = long, y = lat, text = region, group = gro
 )
 ```
 
-###References
+### References
 
 @Blanchard
