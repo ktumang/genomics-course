@@ -27,3 +27,5 @@ knitr::opts_chunk$set(echo = TRUE)
 [Lab 5: Data wrangling and graphing COVID-19 reporting data (Part 2)](Lab5_KatieTumang.html)
 
 [Lab 6: Data Maps and Interactive Graphs from the COVID-19 reporting data](Lab6_KatieTumang.html)
+
+[Lab 6: Clean report](Lab6_KatieTumang_report.html)
