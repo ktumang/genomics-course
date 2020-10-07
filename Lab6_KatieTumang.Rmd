@@ -245,7 +245,7 @@ ggplotly(
   coord_fixed(1.3) + 
   geom_polygon(data = state_join, aes(fill = Confirmed), color = "black") +
     scale_fill_gradientn(colours = 
-                         wes_palette("Royal2", 100, type = "continuous")) +
+                         wes_palette("Royal1", 100, type = "continuous")) +
   ggtitle("COVID-19 cases in Connecticut") +
   labs(x=NULL, y=NULL) +
   theme(panel.border = element_blank()) +
