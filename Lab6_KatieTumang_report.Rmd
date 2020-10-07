@@ -3,6 +3,7 @@ title: "Lab6_KatieTumang_report"
 author: "Katie Tumang"
 date: "October 7, 2020"
 output: html_document
+bibliography: data/ref_lab6.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -243,3 +244,5 @@ ggplot(data = world, mapping = aes(x = long, y = lat, text = region, group = gro
   labs(title = "COVID-19 deaths")
 )
 ```
+
+@Blanchard
