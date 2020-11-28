@@ -1,0 +1,170 @@
+---
+title: "Lab8_KatieTumang"
+author: "Katie Tumang"
+date: "November 28, 2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Use NGPhylogeny.fr to analysis the set of rRNA sequence provided. Describe the methods and put the .png file from your analysis into your Lab 8 .Rmd file
+
+## ggtree tutorial
+
+```{r}
+library(tidyverse)
+library(ggtree)
+library(treeio)
+library(ggimage)
+```
+
+```{r}
+install.packages("treeio", dependencies = TRUE, INSTALL_opts = '--no-lock')
+library(treeio)
+```
+
+
+```{r}
+library(tidyverse)
+library(ggtree)
+tree <- read.tree("tree_newick.nwk")
+tree
+```
+
+```{r}
+ggtree(tree, color="grey", size=1, linetype=1) + theme_tree2()
+
+```
+
+### Exercise 1
+
+#### 1. Create a slanted phylogenetic tree.
+
+```{r}
+ggtree(tree, color="purple", layout="slanted") 
+```
+
+#### 2. Create a circular phylogenetic tree.
+
+```{r}
+ggtree(tree, color="purple", layout="circular")
+```
+
+#### 3. Create a circular unscaled cladogram with thick red lines.
+
+```{r}
+ggtree(tree, color="red", branch.length="none", size=3, layout="circular")
+```
+
+```{r}
+p <- ggtree(tree)
+p + geom_nodepoint()
+p + geom_tippoint()
+p + geom_tiplab()
+```
+
+#### Exercise 2
+
+```{r}
+p <- ggtree(tree)
+p + geom_nodepoint(size=5, color="yellow", alpha=0.5) + 
+  geom_tippoint(color="purple", pch=18) + geom_tiplab(color="purple") +ggtitle("Exercise 2 tree")
+```
+
+### Tree annotation
+
+```{r}
+ggtree(tree) + geom_text(aes(label=node), hjust=-.3)
+```
+
+```{r}
+ggtree(tree) + geom_tiplab()
+MRCA(tree, c("C", "E"))
+MRCA(tree, c("G", "H"))
+```
+
+### Labeling clades
+
+```{r}
+ggtree(tree) + 
+  geom_tiplab() + 
+  geom_cladelabel(node=17, label="Random clade", 
+                  color="red2", offset=.8, align=TRUE) + 
+  geom_cladelabel(node=21, label="Other clade", 
+                  color="green2", offset=.8, align=TRUE) + 
+  theme_tree2() + 
+  xlim(0, 70) + 
+  theme_tree()
+```
+
+```{r}
+ggtree(tree) + 
+  geom_tiplab() + 
+  geom_hilight(node=17, fill="grey") + 
+  geom_hilight(node=21, fill="purple")
+```
+
+### Connecting taxa
+
+```{r}
+ggtree(tree) + 
+  geom_tiplab() + 
+  geom_taxalink("E", "H", color="blue3") +
+  geom_taxalink("C", "G", color="pink", curvature=-.9)
+```
+
+#### Exercise 3
+
+##### 1. 
+```{r}
+MRCA(tree, c("B", "C"))
+MRCA(tree, c("L", "J"))
+```
+
+```{r}
+ggtree(tree) + 
+  theme_tree2() +
+  geom_tiplab() + 
+  geom_hilight(node=19, fill="gold") + 
+  geom_hilight(node=23, fill="purple") +
+  geom_cladelabel(node=17, label="Superclade 17", 
+                  color="red2", offset=.8, align=TRUE) + 
+  geom_taxalink("C", "E", color="grey", linetype=2) +
+  geom_taxalink("G", "J", color="grey", linetype=2, curvature=-.9)
+  
+```
+
+
+### Advanced tree notation
+
+```{r}
+tree <- read.beast("flu_tree_beast.tree")
+```
+
+```{r}
+ggtree(tree, mrsd="2013-01-01") + 
+  theme_tree2() +
+  geom_tiplab(align=TRUE, linesize=.5) + 
+  xlim(1990, 2020)
+```
+
+```{r}
+msaplot(p=ggtree(tree), fasta="flu_aasequence.fasta", window=c(150, 175)) + coord_polar(theta="y")
+```
+
+#### CIPRES tree
+
+```{r}
+tree <- read.tree("fastree_result.tre")
+```
+
+```{r}
+ggtree(tree) +
+  geom_tiplab(hjust=-.1, size = 3) +
+  geom_hilight(node=34, fill="gold", extend = 1) + 
+  geom_hilight(node=21, fill="purple", extend = 1)
+```
+
+
