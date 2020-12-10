@@ -9,9 +9,16 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-### Use NGPhylogeny.fr to analysis the set of rRNA sequence provided. Describe the methods and put the .png file from your analysis into your Lab 8 .Rmd file
+```{r, fig.align='left'}
+knitr::include_graphics('Tree_image.png')
+```
 
 ## ggtree tutorial
+
+```{r}
+BiocManager::install("ggtree")
+```
+
 
 ```{r}
 library(tidyverse)
