@@ -731,12 +731,12 @@ popNames(x)</code></pre>
 <div id="creating-chromr-objects" class="section level3">
 <h3>Creating chromR objects</h3>
 <pre class="r"><code>install.packages(&#39;pinfsc50&#39;, repos = &quot;http://cran.us.r-project.org&quot;)</code></pre>
-<pre><code>## Installing package into &#39;C:/Users/ktt/Documents/R/win-library/4.0&#39;
+<pre><code>## Installing package into &#39;B:/Users/jrtum/Documents/R/win-library/4.0&#39;
 ## (as &#39;lib&#39; is unspecified)</code></pre>
 <pre><code>## package &#39;pinfsc50&#39; successfully unpacked and MD5 sums checked
 ## 
 ## The downloaded binary packages are in
-##  C:\Users\ktt\AppData\Local\Temp\RtmpWshESq\downloaded_packages</code></pre>
+##  C:\Users\jrtum\AppData\Local\Temp\RtmpSQkJxt\downloaded_packages</code></pre>
 <pre class="r"><code>library(vcfR)</code></pre>
 <pre class="r"><code># find the files
 vcf_file &lt;- system.file(&quot;extdata&quot;, &quot;pinf_sc50.vcf.gz&quot;, package = &quot;pinfsc50&quot;)
@@ -781,17 +781,17 @@ chrom &lt;- create.chromR(name=&quot;Supercontig&quot;, vcf=vcf, seq=dna, ann=gf
 <h3>Processing chromR objects</h3>
 <pre class="r"><code>chrom &lt;- proc.chromR(chrom, verbose = TRUE)</code></pre>
 <pre><code>## Nucleotide regions complete.</code></pre>
-<pre><code>##   elapsed time:  0.41</code></pre>
+<pre><code>##   elapsed time:  0.21</code></pre>
 <pre><code>## N regions complete.</code></pre>
-<pre><code>##   elapsed time:  0.22</code></pre>
+<pre><code>##   elapsed time:  0.17</code></pre>
 <pre><code>## Population summary complete.</code></pre>
-<pre><code>##   elapsed time:  0.53</code></pre>
+<pre><code>##   elapsed time:  0.39</code></pre>
 <pre><code>## window_init complete.</code></pre>
 <pre><code>##   elapsed time:  0</code></pre>
 <pre><code>## windowize_fasta complete.</code></pre>
-<pre><code>##   elapsed time:  0.2</code></pre>
+<pre><code>##   elapsed time:  0.17</code></pre>
 <pre><code>## windowize_annotations complete.</code></pre>
-<pre><code>##   elapsed time:  0.01</code></pre>
+<pre><code>##   elapsed time:  0</code></pre>
 <pre><code>## windowize_variants complete.</code></pre>
 <pre><code>##   elapsed time:  0</code></pre>
 <pre class="r"><code>plot(chrom)</code></pre>
