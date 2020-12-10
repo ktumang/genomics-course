@@ -1,7 +1,7 @@
 ---
 title: "Lab12_KatieTumang"
 author: "Katie Tumang"
-date: "12/4/2020"
+date: "11/23/2020"
 output:
   prettydoc::html_pretty:
     theme: architect
@@ -158,19 +158,18 @@ browseVignettes("RCy3")
 
 ##### STRING Protein Query Up-regulated Genes
 
-```{r}
-!(genomics-course/Lab11_visualization_up.png)
+```{r, fig.align='left'}
+knitr::include_graphics('lab12_images/Lab11_visualization_down.png')
 ```
 
 ##### STRING Protein Query Down-regulated Genes
 
-```{r}
-!(Lab11_visualization_down.png)
+```{r, fig.align='left'}
+knitr::include_graphics('lab12_images/Lab11_visualization_up.png')
 ```
-
 ##### STRING Disease Query
 
-```{r}
-!(Lab11_visualization_ovarian.png)
+```{r, fig.align='left'}
+knitr::include_graphics('lab12_images/Lab11_visualization_ovarian.png')
 ```
 
